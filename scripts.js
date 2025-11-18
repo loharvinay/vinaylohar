@@ -1,0 +1,311 @@
+// Load content from JSON file
+async function loadContent() {
+    try {
+        const response = await fetch('content.json');
+        const data = await response.json();
+        
+        // Populate all sections
+        populateMetadata(data);
+        populateNavigation(data);
+        populateHero(data);
+        populateExpertise(data);
+        populateProjects(data);
+        populateExperience(data);
+        populateContact(data);
+        populateFooter(data);
+        
+        // Initialize animations after content is loaded
+        initializeAnimations();
+    } catch (error) {
+        console.error('Error loading content:', error);
+    }
+}
+
+// Populate page metadata
+function populateMetadata(data) {
+    document.title = `${data.personal.name} - ${data.personal.title}`;
+}
+
+// Populate navigation
+function populateNavigation(data) {
+    const logo = document.getElementById('logo');
+
+    // If an <img> is already present (e.g., set in HTML), don't override it
+    const hasImageLogo = !!logo.querySelector('img');
+
+    if (!hasImageLogo) {
+        // Prefer an image; default to VL.png; final fallback to text
+        const imgSrc = (data && data.personal && (data.personal.logoImage || data.personal.logoUrl)) || 'VL.png';
+
+        if (imgSrc) {
+            // Replace any text with a linked image logo
+            logo.innerHTML = '';
+            const a = document.createElement('a');
+            a.href = '#home';
+            a.setAttribute('aria-label', 'Go to home');
+            a.onclick = closeMenu;
+
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = (data && data.personal && data.personal.name) ? `${data.personal.name} logo` : 'Logo';
+
+            a.appendChild(img);
+            logo.appendChild(a);
+        } else if (data && data.personal && data.personal.logo) {
+            // Fallback to text logo if no image available
+            logo.textContent = data.personal.logo;
+        }
+    }
+
+    // Build nav links (clear first to avoid duplicates if re-run)
+    const navLinks = document.getElementById('navLinks');
+    navLinks.innerHTML = '';
+    data.navigation.forEach(item => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.textContent = item.label;
+        a.onclick = closeMenu;
+        li.appendChild(a);
+        navLinks.appendChild(li);
+    });
+}
+
+// Populate hero section
+function populateHero(data) {
+    const heroHeading = document.getElementById('heroHeading');
+    heroHeading.innerHTML = `${data.hero.greeting} <span class="name">${data.personal.name}</span>`;
+    
+    const heroTagline = document.getElementById('heroTagline');
+    heroTagline.textContent = data.personal.tagline;
+    
+    const ctaButtons = document.getElementById('ctaButtons');
+    data.hero.cta.forEach(button => {
+        const a = document.createElement('a');
+        a.href = button.href;
+        a.textContent = button.text;
+        a.className = `btn btn-${button.type}`;
+        ctaButtons.appendChild(a);
+    });
+}
+
+// Populate expertise section
+function populateExpertise(data) {
+    const expertiseTitle = document.getElementById('expertiseTitle');
+    expertiseTitle.textContent = data.expertise.title;
+    
+    const expertiseGrid = document.getElementById('expertiseGrid');
+    data.expertise.cards.forEach(card => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'expertise-card';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = card.title;
+        
+        const p = document.createElement('p');
+        p.textContent = card.description;
+        
+        const techTags = document.createElement('div');
+        techTags.className = 'tech-tags';
+        card.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            techTags.appendChild(span);
+        });
+        
+        cardDiv.appendChild(h3);
+        cardDiv.appendChild(p);
+        cardDiv.appendChild(techTags);
+        expertiseGrid.appendChild(cardDiv);
+    });
+}
+
+// Populate projects section
+function populateProjects(data) {
+    const projectsTitle = document.getElementById('projectsTitle');
+    projectsTitle.textContent = data.projects.title;
+    
+    const projectsGrid = document.getElementById('projectsGrid');
+    data.projects.items.forEach(project => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'project-card';
+        
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'project-image';
+        imageDiv.textContent = project.icon;
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'project-content';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = project.title;
+        
+        const p = document.createElement('p');
+        p.textContent = project.description;
+        
+        const techTags = document.createElement('div');
+        techTags.className = 'tech-tags';
+        project.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            techTags.appendChild(span);
+        });
+        
+        contentDiv.appendChild(h3);
+        contentDiv.appendChild(p);
+        contentDiv.appendChild(techTags);
+        
+        cardDiv.appendChild(imageDiv);
+        cardDiv.appendChild(contentDiv);
+        projectsGrid.appendChild(cardDiv);
+    });
+}
+
+// Populate experience section
+function populateExperience(data) {
+    const experienceTitle = document.getElementById('experienceTitle');
+    experienceTitle.textContent = data.experience.title;
+    
+    const timeline = document.getElementById('timeline');
+    data.experience.timeline.forEach(exp => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'timeline-item';
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'timeline-content';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = exp.position;
+        
+        const company = document.createElement('div');
+        company.className = 'company';
+        company.textContent = exp.company;
+        
+        const date = document.createElement('div');
+        date.className = 'date';
+        date.textContent = exp.period;
+        
+        const p = document.createElement('p');
+        p.textContent = exp.description;
+        
+        contentDiv.appendChild(h3);
+        contentDiv.appendChild(company);
+        contentDiv.appendChild(date);
+        contentDiv.appendChild(p);
+        
+        itemDiv.appendChild(contentDiv);
+        timeline.appendChild(itemDiv);
+    });
+}
+
+// Populate contact section
+function populateContact(data) {
+    const contactTitle = document.getElementById('contactTitle');
+    contactTitle.textContent = data.contact.title;
+    
+    const contactInfo = document.getElementById('contactInfo');
+    data.contact.items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'contact-item';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = item.label;
+        
+        itemDiv.appendChild(h3);
+        
+        if (item.type === 'email') {
+            const a = document.createElement('a');
+            a.href = `mailto:${item.value}`;
+            a.textContent = item.value;
+            itemDiv.appendChild(a);
+        } else if (item.type === 'phone') {
+            const a = document.createElement('a');
+            a.href = `tel:${item.value.replace(/\s/g, '')}`;
+            a.textContent = item.value;
+            itemDiv.appendChild(a);
+        } else if (item.type === 'link') {
+            const a = document.createElement('a');
+            a.href = item.url;
+            a.textContent = item.value;
+            a.target = '_blank';
+            itemDiv.appendChild(a);
+        } else {
+            const p = document.createElement('p');
+            p.textContent = item.value;
+            itemDiv.appendChild(p);
+        }
+        
+        contactInfo.appendChild(itemDiv);
+    });
+    
+    // Add GitHub button
+    const githubButtonContainer = document.getElementById('githubButtonContainer');
+    const a = document.createElement('a');
+    a.href = data.personal.contact.github;
+    a.className = 'btn btn-primary';
+    a.target = '_blank';
+    a.textContent = data.contact.githubButton.text;
+    githubButtonContainer.appendChild(a);
+}
+
+// Populate footer
+function populateFooter(data) {
+    const footerText = document.getElementById('footerText');
+    footerText.textContent = data.footer.copyright;
+}
+
+// Mobile Menu Toggle
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+}
+
+function closeMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.remove('active');
+}
+
+// Smooth Scrolling for Anchor Links
+function initializeSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Initialize scroll animations
+function initializeAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeInUp 1s ease forwards';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.expertise-card, .project-card, .timeline-item').forEach(el => {
+        observer.observe(el);
+    });
+    
+    // Initialize smooth scrolling
+    initializeSmoothScroll();
+}
+
+// Load content when DOM is ready
+document.addEventListener('DOMContentLoaded', loadContent);

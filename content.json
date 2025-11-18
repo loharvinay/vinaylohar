@@ -1,0 +1,140 @@
+{
+  "personal": {
+    "name": "Vinay Lohar",
+    "title": "Full Stack & Mobile Developer",
+    "tagline": "Full Stack & Mobile Developer with 14+ years of experience building scalable applications across telecom, finance, and hospitality sectors.",
+    "logo": "VL",
+    "contact": {
+      "email": "lohar.vinay@gmail.com",
+      "phone": "+47 939-77-435",
+      "location": "Stavanger, Norway",
+      "linkedin": "https://www.linkedin.com/in/vinaylohar",
+      "github": "https://github.com/vinaylohar"
+    }
+  },
+  "navigation": [
+    { "label": "Home", "href": "#home" },
+    { "label": "Expertise", "href": "#expertise" },
+    { "label": "Projects", "href": "#projects" },
+    { "label": "Experience", "href": "#experience" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "hero": {
+    "greeting": "Hi, I'm",
+    "cta": [
+      { "text": "View My Work", "href": "#projects", "type": "primary" },
+      { "text": "Get In Touch", "href": "#contact", "type": "secondary" }
+    ]
+  },
+  "expertise": {
+    "title": "What I Do",
+    "cards": [
+      {
+        "title": "Mobile Development",
+        "description": "Building cross-platform mobile applications with React Native and Expo, focusing on performance and user experience.",
+        "tags": ["React Native", "Expo", "Redux", "Kotlin"]
+      },
+      {
+        "title": "Web Development",
+        "description": "Creating modern, responsive web applications using React, Angular, and micro-frontend architectures.",
+        "tags": ["React", "Angular", "Tailwind", "Bootstrap"]
+      },
+      {
+        "title": "Backend & APIs",
+        "description": "Developing scalable microservices and RESTful APIs using Java, Node.js, and modern database technologies.",
+        "tags": ["Java", "Node.js", "PostgreSQL", "Microservices"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "items": [
+      {
+        "icon": "📱",
+        "title": "Rakuten Mobile App",
+        "description": "Led development of an eCommerce and eCare mobile application using React Native and Redux, featuring data usage tracking, content management, and seamless user experience.",
+        "tags": ["React Native", "Redux", "eCommerce"]
+      },
+      {
+        "icon": "🤖",
+        "title": "Diowise AI Platform",
+        "description": "Currently leading product development for AI-powered automation solutions in hospitality, including virtual concierge and WhatsApp bots for enhanced guest experience.",
+        "tags": ["AI/ML", "Automation", "WhatsApp API"]
+      },
+      {
+        "icon": "🌐",
+        "title": "MANO Orchestration",
+        "description": "Developed monitoring and networking orchestration platform using Angular 7, Ext JS, and Postgres for telecom infrastructure management.",
+        "tags": ["Angular", "Ext JS", "PostgreSQL"]
+      }
+    ]
+  },
+  "experience": {
+    "title": "Career Journey",
+    "timeline": [
+      {
+        "position": "Head of Product",
+        "company": "Diowise",
+        "period": "Jan 2025 - Present",
+        "description": "Leading product strategy and development for AI-powered automation solutions in hospitality and real estate sectors."
+      },
+      {
+        "position": "Principal Software Engineer",
+        "company": "Netcracker Technology",
+        "period": "April 2016 - Jan 2025",
+        "description": "Led development of major telecom projects including Rakuten Mobile and MANO orchestration platform; mentored team members and managed client delivery."
+      },
+      {
+        "position": "Senior Java-GWT Developer",
+        "company": "SA Technologies",
+        "period": "Dec 2015 - Mar 2016",
+        "description": "Developed network operations dashboard using GWT for enterprise clients; focused on widget development and maintenance."
+      },
+      {
+        "position": "Senior Software Developer",
+        "company": "Netmagic Solutions",
+        "period": "May 2014 - Dec 2015",
+        "description": "Built customer portal for managed hosting and cloud services; implemented forms, dashboards, and query optimization."
+      },
+      {
+        "position": "Software Engineer",
+        "company": "Geometric Ltd",
+        "period": "Nov 2010 - May 2014",
+        "description": "Developed PLM solutions and engineering services for global clients; built web services, GUI apps, automation scripts, and reports."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Let's Work Together",
+    "items": [
+      {
+        "label": "Email",
+        "value": "lohar.vinay@gmail.com",
+        "type": "email"
+      },
+      {
+        "label": "Phone",
+        "value": "+47 939-77-435",
+        "type": "phone"
+      },
+      {
+        "label": "Location",
+        "value": "Stavanger, Norway",
+        "type": "text"
+      },
+      {
+        "label": "LinkedIn",
+        "value": "Vinay Lohar",
+        "url": "https://www.linkedin.com/in/vinaylohar",
+        "type": "link"
+      }
+    ],
+    "githubButton": {
+      "text": "View GitHub Profile",
+      "url": "https://github.com/vinaylohar"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Vinay Lohar. Available for freelance opportunities."
+  }
+}
