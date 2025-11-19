@@ -427,48 +427,144 @@ function populateContact(data) {
     contactTitle.textContent = data.contact.title;
 
     const contactInfo = document.getElementById('contactInfo');
-    data.contact.items.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'contact-item';
+    contactInfo.innerHTML = '';
 
-        const h3 = document.createElement('h3');
-        h3.textContent = item.label;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'contact-wrapper';
 
-        itemDiv.appendChild(h3);
+    // Find data
+    const emailItem = data.contact.items.find(item => item.type === 'email');
+    const otherItems = data.contact.items.filter(item => item.type !== 'email');
 
-        if (item.type === 'email') {
+    // 1. THE MAGNETIC BUTTON (The Centerpiece)
+    if (emailItem) {
+        const container = document.createElement('div');
+        container.className = 'magnetic-container';
+
+        // The Ring
+        const ring = document.createElement('div');
+        ring.className = 'spinning-ring';
+
+        // The Button
+        const btn = document.createElement('div');
+        btn.className = 'magnetic-btn';
+        btn.id = 'magneticBtn';
+
+        btn.innerHTML = `
+            <div class="btn-icon">✉️</div>
+            <span class="btn-label">Drop me a line</span>
+            <span class="btn-value">Click to Copy</span>
+        `;
+
+        // --- CLICK ANIMATION (Copy) ---
+        btn.onclick = () => {
+            navigator.clipboard.writeText(emailItem.value);
+            btn.classList.add('copied');
+            const originalHtml = btn.innerHTML;
+
+            btn.innerHTML = `
+                <div class="btn-icon">✅</div>
+                <span class="btn-label">Email Copied!</span>
+            `;
+
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btn.innerHTML = originalHtml;
+            }, 2000);
+        };
+
+        // --- MAGNETIC PHYSICS LOGIC ---
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left; // Mouse X inside container
+            const y = e.clientY - rect.top;  // Mouse Y inside container
+
+            // Calculate center
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Calculate distance from center (Max movement = 40px)
+            const moveX = (x - centerX) / 3;
+            const moveY = (y - centerY) / 3;
+
+            // Apply transform to button (Move it towards mouse)
+            btn.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+            // Text parallax (Text moves slightly more for depth)
+            btn.children[0].style.transform = `translate(${moveX / 2}px, ${moveY / 2}px) scale(1.2)`;
+        });
+
+        // Reset on leave
+        container.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0px, 0px) scale(1)';
+            if (btn.children[0]) {
+                btn.children[0].style.transform = 'translate(0px, 0px) scale(1)';
+            }
+        });
+
+        container.appendChild(ring);
+        container.appendChild(btn);
+        wrapper.appendChild(container);
+    }
+
+    // 2. THE FLOATING DOCK (Socials with Real SVGs)
+    if (otherItems.length > 0) {
+        const dock = document.createElement('div');
+        dock.className = 'social-dock';
+
+        // Define SVG Paths (Lightweight, no external library needed)
+        const icons = {
+            linkedin: '<svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>',
+            github: '<svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>',
+            twitter: '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+            x: '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+            instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+            phone: '<svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.17 15.17 0 01-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1.01A11.36 11.36 0 018.59 3.99c0-.55-.45-1-1-1H4.01c-.55 0-1 .45-1 1 0 9.39 7.61 17.01 17.01 17.01.55 0 1-.45 1-1v-3.58c0-.55-.45-1-1-1z"/></svg>',
+            default: '<svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>'
+        };
+
+        otherItems.forEach(item => {
             const a = document.createElement('a');
-            a.href = `mailto:${item.value}`;
-            a.textContent = item.value;
-            itemDiv.appendChild(a);
-        } else if (item.type === 'phone') {
-            const a = document.createElement('a');
-            a.href = `tel:${item.value.replace(/\s/g, '')}`;
-            a.textContent = item.value;
-            itemDiv.appendChild(a);
-        } else if (item.type === 'link') {
-            const a = document.createElement('a');
-            a.href = item.url;
-            a.textContent = item.value;
-            a.target = '_blank';
-            itemDiv.appendChild(a);
-        } else {
-            const p = document.createElement('p');
-            p.textContent = item.value;
-            itemDiv.appendChild(p);
-        }
+            a.className = 'dock-item';
+            a.setAttribute('data-label', item.label);
 
-        contactInfo.appendChild(itemDiv);
-    });
+            // Determine Link Type (Phone vs URL)
+            if (item.type === 'phone') {
+                a.href = `tel:${item.value.replace(/\s/g, '')}`;
+            } else {
+                a.href = item.url || '#';
+                a.target = '_blank'; // Open URL in new tab
+            }
 
-    // Add GitHub button
+            // Match Icon
+            const key = item.label.toLowerCase();
+            let svgContent = icons.default;
+
+            if (key.includes('linkedin')) svgContent = icons.linkedin;
+            else if (key.includes('github')) svgContent = icons.github;
+            else if (key.includes('twitter') || key.includes('x')) svgContent = icons.x;
+            else if (key.includes('instagram')) svgContent = icons.instagram;
+            else if (key.includes('phone')) svgContent = icons.phone;
+
+            a.innerHTML = svgContent;
+            dock.appendChild(a);
+        });
+
+        wrapper.appendChild(dock);
+    }
+
+    contactInfo.appendChild(wrapper);
+
+    // 3. Footer Button
     const githubButtonContainer = document.getElementById('githubButtonContainer');
-    const a = document.createElement('a');
-    a.href = data.personal.contact.github;
-    a.className = 'btn btn-primary';
-    a.target = '_blank';
-    a.textContent = data.contact.githubButton.text;
-    githubButtonContainer.appendChild(a);
+    githubButtonContainer.innerHTML = '';
+
+    const ghBtn = document.createElement('a');
+    ghBtn.href = data.personal.contact.github;
+    ghBtn.className = 'github-footer-btn';
+    ghBtn.target = '_blank';
+    ghBtn.innerHTML = `<span>${data.contact.githubButton.text} on GitHub</span> <span>→</span>`;
+
+    githubButtonContainer.appendChild(ghBtn);
 }
 
 // Populate footer
