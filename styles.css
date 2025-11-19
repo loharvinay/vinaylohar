@@ -584,104 +584,99 @@ section {
     }
 }
 
-/* --- PROJECTS SECTION --- */
+/* --- PROJECTS SECTION (Modern Tech Card) --- */
 #projects {
     background: var(--black);
+    padding: 100px 0;
     position: relative;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* Wider cards */
     gap: 40px;
     margin-top: 60px;
 }
 
-/* Card Base */
 .project-card {
-    background: #0a0a0a;
-    border-radius: 20px;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
     overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: 100%;
-}
-
-/* The Neon Shadow Bloom Effect */
-.project-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 20px;
-    box-shadow: 0 0 0px rgba(255, 215, 0, 0);
-    transition: box-shadow 0.4s ease;
-    z-index: -1;
-}
-
-.project-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: rgba(255, 215, 0, 0.2);
-    /* The "Bloom" shadow */
-    box-shadow: 0 20px 40px -10px rgba(255, 215, 0, 0.15);
-}
-
-/* Image Container */
-.project-image {
-    height: 240px;
-    width: 100%;
-    overflow: hidden;
+    height: 100%; /* Ensures equal height in grid */
     position: relative;
+}
+
+/* Hover: Lift up and glow yellow */
+.project-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 215, 0, 0.3);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* --- IMAGE AREA --- */
+.project-image {
+    width: 100%;
+    height: 220px; /* Fixed height for consistency */
+    position: relative;
+    overflow: hidden;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* The Image Itself */
 .project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease, filter 0.4s ease;
-    filter: grayscale(20%) brightness(0.8); /* Slightly muted initially */
+    transition: transform 0.5s ease;
 }
 
+/* Hover: Slight zoom on image */
 .project-card:hover .project-image img {
-    transform: scale(1.15); /* Cinematic Zoom */
-    filter: grayscale(0%) brightness(1); /* Full color on hover */
+    transform: scale(1.08);
 }
 
-/* Overlay Gradient on Image */
-.project-image::after {
+/* The "Sheen" Effect (Diagonal light reflection) */
+.project-image::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(to top, #0a0a0a, transparent);
-    opacity: 0.8;
+    top: 0;
+    left: -75%;
+    z-index: 2;
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 100%);
+    transform: skewX(-25deg);
+    transition: none;
+    pointer-events: none;
 }
 
-/* Content Area */
+/* Trigger Sheen on Hover */
+.project-card:hover .project-image::before {
+    animation: sheen 0.75s;
+}
+
+@keyframes sheen {
+    100% { left: 125%; }
+}
+
+/* --- CONTENT AREA --- */
 .project-content {
-    padding: 30px;
-    flex-grow: 1;
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    position: relative;
-    z-index: 2;
-    background: #0a0a0a;
+    flex-grow: 1;
 }
 
 .project-content h3 {
-    font-size: 24px;
+    font-size: 22px;
     color: var(--white);
-    margin-bottom: 15px;
-    transition: color 0.3s ease;
+    margin-bottom: 12px;
+    font-weight: 700;
+    transition: color 0.3s;
 }
 
 .project-card:hover .project-content h3 {
@@ -689,48 +684,55 @@ section {
 }
 
 .project-content p {
-    color: #888;
+    color: #999;
     font-size: 15px;
     line-height: 1.6;
-    margin-bottom: 25px;
-    flex-grow: 1;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Pushes tags to bottom */
 }
 
-/* Floating Tech Tags */
+/* --- TAGS --- */
 .tech-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: auto; /* Push to bottom */
+    margin-top: auto;
 }
 
 .tag {
     font-size: 11px;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #ccc;
+    background: rgba(255, 255, 255, 0.05);
     padding: 6px 12px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.03);
-    color: #aaa;
+    border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    transition: all 0.3s;
 }
 
 .project-card:hover .tag {
     background: rgba(255, 215, 0, 0.05);
-    border-color: rgba(255, 215, 0, 0.2);
     color: var(--yellow);
-    transform: translateY(-2px); /* Little hop effect */
+    border-color: rgba(255, 215, 0, 0.2);
 }
 
-/* Mobile Responsive */
+/* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
-    .project-card:hover {
-        transform: translateY(-5px);
+    .projects-grid {
+        grid-template-columns: 1fr; /* Full width on mobile */
+        gap: 25px;
     }
+    
+    .project-card {
+        border-radius: 12px;
+    }
+    
     .project-image {
         height: 200px;
+    }
+    
+    .project-content h3 {
+        font-size: 20px;
     }
 }
 

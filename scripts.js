@@ -177,20 +177,29 @@ function populateExpertise(data) {
     });
 }
 
-// Populate projects section
 function populateProjects(data) {
     const projectsTitle = document.getElementById('projectsTitle');
     projectsTitle.textContent = data.projects.title;
 
     const projectsGrid = document.getElementById('projectsGrid');
-    projectsGrid.innerHTML = ''; // Clean slate
+    projectsGrid.innerHTML = '';
 
     data.projects.items.forEach(project => {
-        // Create Main Card
+        // 1. Create Card Wrapper
         const cardDiv = document.createElement('div');
         cardDiv.className = 'project-card';
 
-        // 1. Image Section
+        // Make the whole card clickable if there is a URL
+        if (project.url) {
+            cardDiv.style.cursor = "pointer";
+            cardDiv.onclick = (e) => {
+                // Prevent conflict if we add other buttons later
+                e.preventDefault();
+                window.open(project.url, '_blank');
+            };
+        }
+
+        // 2. Image Section
         const imageDiv = document.createElement('div');
         imageDiv.className = 'project-image';
 
@@ -198,19 +207,18 @@ function populateProjects(data) {
             const img = document.createElement('img');
             img.src = project.image;
             img.alt = project.title;
-            img.loading = "lazy"; // Performance boost
+            img.loading = "lazy";
             imageDiv.appendChild(img);
         } else {
-            // Fallback if no image
+            // Nice fallback gradient if image is missing
+            imageDiv.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)';
             imageDiv.style.display = 'flex';
             imageDiv.style.alignItems = 'center';
             imageDiv.style.justifyContent = 'center';
-            imageDiv.style.background = '#1a1a1a';
-            imageDiv.style.fontSize = '30px';
-            imageDiv.innerHTML = `<span style="font-size: 40px;">${project.icon || '💻'}</span>`;
+            imageDiv.innerHTML = '<span style="font-size:40px; opacity:0.3">✨</span>';
         }
 
-        // 2. Content Section
+        // 3. Content Section
         const contentDiv = document.createElement('div');
         contentDiv.className = 'project-content';
 
@@ -220,7 +228,7 @@ function populateProjects(data) {
         const p = document.createElement('p');
         p.textContent = project.description;
 
-        // Tech Tags
+        // Tags
         const techTags = document.createElement('div');
         techTags.className = 'tech-tags';
         project.tags.forEach(tag => {
@@ -230,27 +238,15 @@ function populateProjects(data) {
             techTags.appendChild(span);
         });
 
-        // Assemble Content
+        // 4. Assemble
         contentDiv.appendChild(h3);
         contentDiv.appendChild(p);
         contentDiv.appendChild(techTags);
 
-        // Assemble Card
         cardDiv.appendChild(imageDiv);
         cardDiv.appendChild(contentDiv);
 
-        // Optional: Wrap entire card in link if URL exists
-        if (project.url) {
-            const linkWrapper = document.createElement('a');
-            linkWrapper.href = project.url;
-            linkWrapper.target = "_blank";
-            linkWrapper.style.textDecoration = "none";
-            linkWrapper.style.display = "block";
-            linkWrapper.appendChild(cardDiv);
-            projectsGrid.appendChild(linkWrapper);
-        } else {
-            projectsGrid.appendChild(cardDiv);
-        }
+        projectsGrid.appendChild(cardDiv);
     });
 }
 
