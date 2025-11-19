@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Loading...</title>
     <link rel="stylesheet" href="styles.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Space+Grotesk:wght@700&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" href="VL.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="VL.png">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav>
@@ -30,11 +36,36 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Animated Background Elements -->
+        <div class="hero-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="grid-overlay"></div>
+        </div>
+
         <div class="hero-content">
+            <!-- <div class="badge-container">
+                <span class="status-badge">Available for work</span>
+            </div> -->
             <h1 id="heroHeading"></h1>
-            <p id="heroTagline"></p>
+            <div class="tagline-wrapper">
+                <p id="heroTagline" class="typewriter"></p>
+            </div>
             <div class="cta-buttons" id="ctaButtons"></div>
         </div>
+
+        <!-- Scroll Indicator -->
+        <a href="#expertise" class="scroll-indicator" aria-label="Scroll down">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
     </section>
 
     <!-- Expertise Section -->
@@ -88,4 +119,5 @@
 
     <script src="scripts.js"></script>
 </body>
+
 </html>
