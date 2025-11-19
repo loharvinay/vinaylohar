@@ -10,6 +10,7 @@ async function loadContent() {
         populateHero(data);
         populateExpertise(data);
         populateProjects(data);
+        populateApplications(data);
         populateExperience(data);
         populateContact(data);
         populateFooter(data);
@@ -133,7 +134,15 @@ function populateProjects(data) {
         
         const imageDiv = document.createElement('div');
         imageDiv.className = 'project-image';
-        imageDiv.textContent = project.icon;
+        
+        if (project.image) {
+            const img = document.createElement('img');
+            img.src = project.image;
+            img.alt = project.title;
+            imageDiv.appendChild(img);
+        } else {
+            imageDiv.textContent = project.icon;
+        }
         
         const contentDiv = document.createElement('div');
         contentDiv.className = 'project-content';
@@ -160,6 +169,76 @@ function populateProjects(data) {
         cardDiv.appendChild(imageDiv);
         cardDiv.appendChild(contentDiv);
         projectsGrid.appendChild(cardDiv);
+    });
+}
+
+// Populate applications section
+function populateApplications(data) {
+    if (!data.applications) return;
+    
+    const applicationsTitle = document.getElementById('applicationsTitle');
+    applicationsTitle.textContent = data.applications.title;
+    
+    const applicationsSubtitle = document.getElementById('applicationsSubtitle');
+    if (applicationsSubtitle && data.applications.subtitle) {
+        applicationsSubtitle.textContent = data.applications.subtitle;
+    }
+    
+    const applicationsGrid = document.getElementById('applicationsGrid');
+    data.applications.items.forEach(application => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'creation-card';
+        
+        const previewDiv = document.createElement('div');
+        previewDiv.className = 'creation-preview';
+        
+        if (application.image) {
+            const img = document.createElement('img');
+            img.src = application.image;
+            img.alt = application.title;
+            previewDiv.appendChild(img);
+        } else {
+            previewDiv.textContent = application.icon;
+        }
+        
+        const badge = document.createElement('span');
+        badge.className = `creation-badge ${application.type}`;
+        badge.textContent = application.type;
+        previewDiv.appendChild(badge);
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'creation-content';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = application.title;
+        
+        const p = document.createElement('p');
+        p.textContent = application.description;
+        
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'creation-tags';
+        application.tags.forEach(tag => {
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'creation-tag';
+            tagSpan.textContent = tag;
+            tagsDiv.appendChild(tagSpan);
+        });
+        
+        const link = document.createElement('a');
+        link.href = application.url;
+        link.className = 'creation-link';
+        link.textContent = 'Visit Now';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        contentDiv.appendChild(h3);
+        contentDiv.appendChild(p);
+        contentDiv.appendChild(tagsDiv);
+        contentDiv.appendChild(link);
+        
+        cardDiv.appendChild(previewDiv);
+        cardDiv.appendChild(contentDiv);
+        applicationsGrid.appendChild(cardDiv);
     });
 }
 
@@ -299,7 +378,7 @@ function initializeAnimations() {
     }, observerOptions);
 
     // Observe all animated elements
-    document.querySelectorAll('.expertise-card, .project-card, .timeline-item').forEach(el => {
+    document.querySelectorAll('.expertise-card, .project-card, .creation-card, .timeline-item').forEach(el => {
         observer.observe(el);
     });
     

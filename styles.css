@@ -249,6 +249,13 @@ section {
     margin-top: 60px;
 }
 
+.applications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
 .project-card {
     background: var(--gray);
     border: 1px solid rgba(255, 215, 0, 0.1);
@@ -271,6 +278,19 @@ section {
     font-size: 48px;
     color: var(--yellow);
     border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1) translateY(-10px);
 }
 
 .project-content {
@@ -287,6 +307,169 @@ section {
     color: #cccccc;
     line-height: 1.6;
     margin-bottom: 20px;
+}
+
+/* Creations Section */
+.section-subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: #cccccc;
+    margin-bottom: 60px;
+    font-weight: 300;
+}
+
+.creations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+}
+
+.creation-card {
+    background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 12px;
+}
+
+.creation-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--yellow);
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.15);
+}
+
+.creation-preview {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.03) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.creation-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.creation-card:hover .creation-preview img {
+    transform: scale(1.12) translateY(-8px);
+}
+
+.creation-card:hover .creation-preview {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 215, 0, 0.05) 100%);
+}
+
+.creation-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--yellow);
+    color: var(--black);
+    padding: 6px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    border-radius: 3px;
+    backdrop-filter: blur(10px);
+}
+
+.creation-badge.website {
+    background: rgba(76, 175, 80, 0.95);
+    color: white;
+}
+
+.creation-badge.mobile {
+    background: rgba(33, 150, 243, 0.95);
+    color: white;
+}
+
+.creation-badge.game {
+    background: rgba(255, 152, 0, 0.95);
+    color: white;
+}
+
+.creation-content {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.creation-content h3 {
+    color: var(--yellow);
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.creation-content p {
+    color: #b0b0b0;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex-grow: 1;
+    font-size: 13px;
+}
+
+.creation-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.creation-tag {
+    background: rgba(255, 215, 0, 0.08);
+    color: var(--yellow);
+    padding: 4px 10px;
+    font-size: 11px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 3px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.creation-card:hover .creation-tag {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.creation-link {
+    display: inline-block;
+    padding: 10px 18px;
+    background: var(--yellow);
+    border: 2px solid var(--yellow);
+    color: var(--black);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    transition: all 0.3s ease;
+    text-align: center;
+    align-self: flex-start;
+    border-radius: 3px;
+    margin-left: auto;
+}
+
+.creation-link:hover {
+    background: transparent;
+    color: var(--yellow);
+    transform: translateX(2px);
 }
 
 /* Experience Timeline */
@@ -468,6 +651,14 @@ footer p {
     }
 
     .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .applications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .creations-grid {
         grid-template-columns: 1fr;
     }
 

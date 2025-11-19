@@ -16,6 +16,7 @@
     { "label": "Home", "href": "#home" },
     { "label": "Expertise", "href": "#expertise" },
     { "label": "Projects", "href": "#projects" },
+    { "label": "Applications", "href": "#applications" },
     { "label": "Experience", "href": "#experience" },
     { "label": "Contact", "href": "#contact" }
   ],
@@ -53,19 +54,73 @@
         "icon": "📱",
         "title": "Rakuten Mobile App",
         "description": "Led development of an eCommerce and eCare mobile application using React Native and Redux, featuring data usage tracking, content management, and seamless user experience.",
+        "image": "https://play-lh.googleusercontent.com/oylvnE2HuRXJDjGMWI3gbfBgewXuEFk8HjvpsqtJG0eV0I3UXjKcqvL86LTGeepA9NtQ=w5120-h2880-rw",
         "tags": ["React Native", "Redux", "eCommerce"]
       },
       {
         "icon": "🤖",
         "title": "Diowise AI Platform",
         "description": "Currently leading product development for AI-powered automation solutions in hospitality, including virtual concierge and WhatsApp bots for enhanced guest experience.",
+        "image": "https://cdn.prod.website-files.com/5ef0a48c75d5b78296c95323/5f85a5e17cb1008446d65999_si8TP-xmu_Q5Q7izMoGqp_0zPhDUKx-UXC9O6Zvqz2qG0P3ISY53Hcqvm0f9hlDjiT0GJz8-KPehei1OGci8H1QPNV4vjVmS-Bmk4KFgoi7y1bPy33_avNAXPhnfWszGH6bgXoK0.png",
         "tags": ["AI/ML", "Automation", "WhatsApp API"]
       },
       {
         "icon": "🌐",
         "title": "MANO Orchestration",
         "description": "Developed monitoring and networking orchestration platform using Angular 7, Ext JS, and Postgres for telecom infrastructure management.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
         "tags": ["Angular", "Ext JS", "PostgreSQL"]
+      }
+    ]
+  },
+  "applications": {
+    "title": "Live Applications",
+    "subtitle": "Websites, Mobile Apps & Games - Ready to Explore",
+    "items": [
+      {
+        "icon": "🌐",
+        "title": "Generic Booking Site",
+        "description": "Modern responsive Booking Website built with React.js and Tailwind CSS.",
+        "type": "website",
+        "url": "https://booking.wildlifeluxuries.com/",
+        "image": "/assets/images/wildlife.png",
+        "tags": ["React", "Responsive", "Zustand", "Tailwind"]
+      },
+      {
+        "icon": "💼",
+        "title": "Botspice MyConcierge",
+        "description": "Enterprise platform for managing business solutions and service offerings with advanced filtering and analytics.",
+        "type": "website",
+        "url": "https://www.botspice.com/myconcierge",
+        "image": "/assets/images/myconcierge.png",
+        "tags": ["Bootstrap", "Rive", "Animations"]
+      },
+      {
+        "icon": "🛍️",
+        "title": "E-Commerce Store",
+        "description": "Full-featured e-commerce platform with product catalog, shopping cart, and secure checkout experience.",
+        "type": "website",
+        "url": "https://store.vinaylohar.com",
+        "image": "https://images.unsplash.com/photo-1661956601031-faf2107f8a0f?w=800&h=600&fit=crop",
+        "tags": ["eCommerce", "Shopping", "Payments"]
+      },
+      {
+        "icon": "📱",
+        "title": "Task Manager App",
+        "description": "Cross-platform mobile application for managing tasks and projects with real-time synchronization.",
+        "type": "mobile",
+        "url": "https://play.google.com/store/apps/details?id=com.vinaylohar.taskmanager",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
+        "tags": ["React Native", "Mobile", "Productivity"]
+      },
+      {
+        "icon": "🎮",
+        "title": "Space Adventure Game",
+        "description": "Engaging 2D space arcade game built with modern web technologies featuring exciting gameplay mechanics.",
+        "type": "game",
+        "url": "https://games.vinaylohar.com/space-adventure",
+        "image": "https://images.unsplash.com/photo-1538481143235-5d633e9f2765?w=800&h=600&fit=crop",
+        "tags": ["Game", "Canvas", "JavaScript"]
       }
     ]
   },
