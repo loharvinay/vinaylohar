@@ -263,64 +263,124 @@ function populateApplications(data) {
     }
 
     const applicationsGrid = document.getElementById('applicationsGrid');
-    data.applications.items.forEach(application => {
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'creation-card';
+    applicationsGrid.innerHTML = '';
 
-        const previewDiv = document.createElement('div');
-        previewDiv.className = 'creation-preview';
+    data.applications.items.forEach(app => {
+        // LOGIC: Check if URL exists
+        const isLive = !!app.url;
 
-        if (application.image) {
-            const img = document.createElement('img');
-            img.src = application.image;
-            img.alt = application.title;
-            previewDiv.appendChild(img);
-        } else {
-            previewDiv.textContent = application.icon;
+        // 1. Create Container
+        // If Live: make it an anchor (<a>). If Coming Soon: make it a div (<div>)
+        const slate = document.createElement(isLive ? 'a' : 'div');
+        slate.className = `app-slate ${isLive ? '' : 'no-link'}`;
+
+        if (isLive) {
+            slate.href = app.url;
+            slate.target = '_blank';
         }
 
-        const badge = document.createElement('span');
-        badge.className = `creation-badge ${application.type}`;
-        badge.textContent = application.type;
-        previewDiv.appendChild(badge);
+        // --- LEFT SIDE: IMAGE ---
+        const imageBox = document.createElement('div');
+        imageBox.className = 'slate-image-box';
 
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'creation-content';
+        if (app.image) {
+            // 1. Create the Blurred Background Layer
+            const bgBlur = document.createElement('div');
+            bgBlur.className = 'slate-bg-blur';
+            // Set background image via CSS
+            bgBlur.style.backgroundImage = `url('${app.image}')`;
 
+            // 2. Create the Sharp Foreground Layer
+            const imgWrapper = document.createElement('div');
+            imgWrapper.className = 'slate-img-wrapper';
+
+            const img = document.createElement('img');
+            img.src = app.image;
+            img.alt = app.title;
+            img.loading = "lazy";
+
+            imgWrapper.appendChild(img);
+
+            // Append both layers
+            imageBox.appendChild(bgBlur);
+            imageBox.appendChild(imgWrapper);
+        } else {
+            // Elegant Fallback
+            imageBox.style.background = 'linear-gradient(135deg, #111 0%, #222 100%)';
+            imageBox.style.display = 'flex';
+            imageBox.style.alignItems = 'center';
+            imageBox.style.justifyContent = 'center';
+            imageBox.innerHTML = '<span style="font-size:50px; opacity:0.5">⚡</span>';
+        }
+
+        // --- RIGHT SIDE: CONTENT ---
+        const content = document.createElement('div');
+        content.className = 'slate-content';
+
+        // 1. Meta Row (Type + Status)
+        const metaRow = document.createElement('div');
+        metaRow.className = 'slate-meta';
+
+        const typeBadge = document.createElement('span');
+        typeBadge.className = 'app-type-badge';
+        typeBadge.setAttribute('data-type', (app.type || 'app').toLowerCase());
+        typeBadge.textContent = app.type || 'Application';
+
+        // STATUS LOGIC
+        const liveIndicator = document.createElement('div');
+        if (isLive) {
+            liveIndicator.className = 'live-indicator';
+            liveIndicator.innerHTML = '<span class="blink-dot"></span> Live';
+        } else {
+            liveIndicator.className = 'live-indicator coming-soon';
+            liveIndicator.innerHTML = '<span class="wait-dot"></span> Coming Soon';
+        }
+
+        metaRow.appendChild(typeBadge);
+        metaRow.appendChild(liveIndicator);
+
+        // 2. Text Content
         const h3 = document.createElement('h3');
-        h3.textContent = application.title;
+        h3.textContent = app.title;
 
         const p = document.createElement('p');
-        p.textContent = application.description;
+        p.textContent = app.description;
 
-        const tagsDiv = document.createElement('div');
-        tagsDiv.className = 'creation-tags';
-        application.tags.forEach(tag => {
-            const tagSpan = document.createElement('span');
-            tagSpan.className = 'creation-tag';
-            tagSpan.textContent = tag;
-            tagsDiv.appendChild(tagSpan);
-        });
+        // 3. Footer (Tags + Button)
+        const footer = document.createElement('div');
+        footer.className = 'slate-footer';
 
-
-
-        contentDiv.appendChild(h3);
-        contentDiv.appendChild(p);
-        contentDiv.appendChild(tagsDiv);
-
-        if (application.url) {
-            const link = document.createElement('a');
-            link.href = application.url;
-            link.className = 'creation-link';
-            link.textContent = 'Visit Now';
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            contentDiv.appendChild(link);
+        const tagContainer = document.createElement('div');
+        tagContainer.className = 'app-tags';
+        if (app.tags) {
+            app.tags.forEach(tag => {
+                const t = document.createElement('span');
+                t.className = 'mini-tag';
+                t.textContent = tag;
+                tagContainer.appendChild(t);
+            });
         }
 
-        cardDiv.appendChild(previewDiv);
-        cardDiv.appendChild(contentDiv);
-        applicationsGrid.appendChild(cardDiv);
+        footer.appendChild(tagContainer);
+
+        // BUTTON LOGIC: Only show if URL exists
+        if (isLive) {
+            const visitBtn = document.createElement('div');
+            visitBtn.className = 'visit-btn';
+            visitBtn.innerHTML = 'Visit Project <span>→</span>';
+            footer.appendChild(visitBtn);
+        }
+
+        // Assemble
+        content.appendChild(metaRow);
+        content.appendChild(h3);
+        content.appendChild(p);
+        content.appendChild(footer);
+
+        slate.appendChild(imageBox);
+        slate.appendChild(content);
+
+        applicationsGrid.appendChild(slate);
     });
 }
 
