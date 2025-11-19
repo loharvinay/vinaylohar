@@ -224,17 +224,21 @@ function populateApplications(data) {
             tagsDiv.appendChild(tagSpan);
         });
         
-        const link = document.createElement('a');
-        link.href = application.url;
-        link.className = 'creation-link';
-        link.textContent = 'Visit Now';
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
+
         
         contentDiv.appendChild(h3);
         contentDiv.appendChild(p);
         contentDiv.appendChild(tagsDiv);
-        contentDiv.appendChild(link);
+
+        if(application.url) {
+        const link = document.createElement('a');
+            link.href = application.url;
+            link.className = 'creation-link';
+            link.textContent = 'Visit Now';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            contentDiv.appendChild(link);
+        }
         
         cardDiv.appendChild(previewDiv);
         cardDiv.appendChild(contentDiv);

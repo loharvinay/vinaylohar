@@ -84,7 +84,7 @@
         "type": "website",
         "url": "https://booking.wildlifeluxuries.com/",
         "image": "/assets/images/wildlife.png",
-        "tags": ["React", "Responsive", "Zustand", "Tailwind"]
+        "tags": ["React", "Responsive", "Zustand", "Tailwind", "Payments"]
       },
       {
         "icon": "💼",
@@ -93,34 +93,33 @@
         "type": "website",
         "url": "https://www.botspice.com/myconcierge",
         "image": "/assets/images/myconcierge.png",
-        "tags": ["Bootstrap", "Rive", "Animations"]
+        "tags": ["Bootstrap", "Rive", "Animations", "Responsive"]
       },
       {
         "icon": "🛍️",
-        "title": "E-Commerce Store",
-        "description": "Full-featured e-commerce platform with product catalog, shopping cart, and secure checkout experience.",
-        "type": "website",
-        "url": "https://store.vinaylohar.com",
-        "image": "https://images.unsplash.com/photo-1661956601031-faf2107f8a0f?w=800&h=600&fit=crop",
-        "tags": ["eCommerce", "Shopping", "Payments"]
+        "title": "Flip-it Game",
+        "description": "Flip it is a fun and addictive web-based game where players flip tiles to match pairs and score points.",
+        "type": "game",
+        "url": "https://vinaylohar.github.io/flip-it",
+        "image": "/assets/images/flip-it.png",
+        "tags": ["React", "Firebase", "Redux", "Responsive"]
       },
       {
         "icon": "📱",
-        "title": "Task Manager App",
-        "description": "Cross-platform mobile application for managing tasks and projects with real-time synchronization.",
-        "type": "mobile",
-        "url": "https://play.google.com/store/apps/details?id=com.vinaylohar.taskmanager",
-        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
-        "tags": ["React Native", "Mobile", "Productivity"]
+        "title": "Daily Booking Engine",
+        "description": "Modern booking engine for hourly and daily rentals with seamless user experience.",
+        "type": "website",
+        "url": "https://booking.thejpod.com/booking/listing?groupName=JPOD&propertyId=jpod-ahmedabad",
+        "image": "/assets/images/jpod.png",
+        "tags": ["Angular", "Responsive", "Ngrx", "Tailwind", "Payments"]
       },
       {
         "icon": "🎮",
-        "title": "Space Adventure Game",
-        "description": "Engaging 2D space arcade game built with modern web technologies featuring exciting gameplay mechanics.",
-        "type": "game",
-        "url": "https://games.vinaylohar.com/space-adventure",
-        "image": "https://images.unsplash.com/photo-1538481143235-5d633e9f2765?w=800&h=600&fit=crop",
-        "tags": ["Game", "Canvas", "JavaScript"]
+        "title": "Omni-connect",
+        "description": "Omni-connect is a multi-channel communication app that integrates various messaging platforms into a single interface.",
+        "type": "mobile app & webapp",
+        "image": "/assets/images/omni-connect.png",
+        "tags": ["Expo", "Zustand", "React Native"]
       }
     ]
   },
