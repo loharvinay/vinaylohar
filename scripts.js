@@ -183,10 +183,14 @@ function populateProjects(data) {
     projectsTitle.textContent = data.projects.title;
 
     const projectsGrid = document.getElementById('projectsGrid');
+    projectsGrid.innerHTML = ''; // Clean slate
+
     data.projects.items.forEach(project => {
+        // Create Main Card
         const cardDiv = document.createElement('div');
         cardDiv.className = 'project-card';
 
+        // 1. Image Section
         const imageDiv = document.createElement('div');
         imageDiv.className = 'project-image';
 
@@ -194,11 +198,19 @@ function populateProjects(data) {
             const img = document.createElement('img');
             img.src = project.image;
             img.alt = project.title;
+            img.loading = "lazy"; // Performance boost
             imageDiv.appendChild(img);
         } else {
-            imageDiv.textContent = project.icon;
+            // Fallback if no image
+            imageDiv.style.display = 'flex';
+            imageDiv.style.alignItems = 'center';
+            imageDiv.style.justifyContent = 'center';
+            imageDiv.style.background = '#1a1a1a';
+            imageDiv.style.fontSize = '30px';
+            imageDiv.innerHTML = `<span style="font-size: 40px;">${project.icon || '💻'}</span>`;
         }
 
+        // 2. Content Section
         const contentDiv = document.createElement('div');
         contentDiv.className = 'project-content';
 
@@ -208,6 +220,7 @@ function populateProjects(data) {
         const p = document.createElement('p');
         p.textContent = project.description;
 
+        // Tech Tags
         const techTags = document.createElement('div');
         techTags.className = 'tech-tags';
         project.tags.forEach(tag => {
@@ -217,13 +230,27 @@ function populateProjects(data) {
             techTags.appendChild(span);
         });
 
+        // Assemble Content
         contentDiv.appendChild(h3);
         contentDiv.appendChild(p);
         contentDiv.appendChild(techTags);
 
+        // Assemble Card
         cardDiv.appendChild(imageDiv);
         cardDiv.appendChild(contentDiv);
-        projectsGrid.appendChild(cardDiv);
+
+        // Optional: Wrap entire card in link if URL exists
+        if (project.url) {
+            const linkWrapper = document.createElement('a');
+            linkWrapper.href = project.url;
+            linkWrapper.target = "_blank";
+            linkWrapper.style.textDecoration = "none";
+            linkWrapper.style.display = "block";
+            linkWrapper.appendChild(cardDiv);
+            projectsGrid.appendChild(linkWrapper);
+        } else {
+            projectsGrid.appendChild(cardDiv);
+        }
     });
 }
 
