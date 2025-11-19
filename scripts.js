@@ -130,12 +130,14 @@ function populateHero(data) {
     });
 }
 
-// Populate expertise section
+// Populate expertise section with Spotlight Effect
 function populateExpertise(data) {
     const expertiseTitle = document.getElementById('expertiseTitle');
     expertiseTitle.textContent = data.expertise.title;
 
     const expertiseGrid = document.getElementById('expertiseGrid');
+    expertiseGrid.innerHTML = ''; // Clear existing content
+
     data.expertise.cards.forEach(card => {
         const cardDiv = document.createElement('div');
         cardDiv.className = 'expertise-card';
@@ -148,6 +150,7 @@ function populateExpertise(data) {
 
         const techTags = document.createElement('div');
         techTags.className = 'tech-tags';
+
         card.tags.forEach(tag => {
             const span = document.createElement('span');
             span.className = 'tag';
@@ -158,6 +161,18 @@ function populateExpertise(data) {
         cardDiv.appendChild(h3);
         cardDiv.appendChild(p);
         cardDiv.appendChild(techTags);
+
+        // --- MOUSE MOVE SPOTLIGHT LOGIC ---
+        cardDiv.addEventListener('mousemove', (e) => {
+            const rect = cardDiv.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Set CSS variables for the spotlight position
+            cardDiv.style.setProperty('--mouse-x', `${x}px`);
+            cardDiv.style.setProperty('--mouse-y', `${y}px`);
+        });
+
         expertiseGrid.appendChild(cardDiv);
     });
 }
